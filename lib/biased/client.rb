@@ -18,7 +18,8 @@ module Biased
       # Wikipedia has multiple fields for a parent organization,
       # so we need to try each one
       %w(parent owner).each do |field|
-        parent = /#{field}\s*=\s\[\[([A-Z])\w+/.match(content)
+        # This Regex should be cleaned up.
+        parent = /#{field}\s*=\s\[\[([A-Z]).*\w+/.match(content)
                                                .to_s.split("[[")[1]
         return parent if parent
       end
