@@ -15,7 +15,13 @@ module Biased
 
     def gather_from_wikipedia
       content = Wikipedia.find(@domain).content
-      /parent\s*=\s\[\[([A-Z])\w+/.match(content).to_s.split("[[")[1]
+      # Wikipedia has multiple fields for a parent organization,
+      # so we need to try each one
+      %w(parent owner).each do |field|
+        parent = /#{field}\s*=\s\[\[([A-Z])\w+/.match(content)
+                                               .to_s.split("[[")[1]
+        return parent if parent
+      end
     end
   end
 end
