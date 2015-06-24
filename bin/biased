@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require "biased"
+
+puts Biased::Client.new(ARGV[0]).parent
+

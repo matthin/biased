@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.email         = "justin@matthin.com"
   s.files         = Dir.glob("lib/**/*")
   s.require_paths = ["lib"]
+  s.executables   = ["biased"]
   s.homepage      = "https://github.com/matthin/biased"
   s.license       = "MIT"
   s.add_runtime_dependency("httparty", "~> 0.13")
