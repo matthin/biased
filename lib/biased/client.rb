@@ -19,9 +19,9 @@ module Biased
       # so we need to try each one
       %w(parent owner).each do |field|
         # This Regex should be cleaned up.
-        parent = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
+        match = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
         # Capture group 2 contains only the parent value
-        return parent[2] if parent
+        return match[2] if match
       end
     end
   end
