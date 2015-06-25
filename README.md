@@ -8,7 +8,7 @@
 To run from the command line, use: `biased example.com`
 
 # Code Example
-```
+```ruby
 require "biased"
 
 puts Biased::Client.new("huffingtonpost.com").parent
