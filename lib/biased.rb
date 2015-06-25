@@ -1,7 +1,11 @@
 require "biased/client"
 
-require "wikipedia"
-Wikipedia.Configure {
-  protocol "https"
-}
+# Namespace for everything in the biased codebase.
+# @since 0.0.1
+module Biased
+  require "wikipedia"
+  Wikipedia.Configure {
+    protocol "https"
+  }
+end
 

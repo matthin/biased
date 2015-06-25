@@ -3,8 +3,10 @@ require "wikipedia"
 
 module Biased
   # @author Justin Harrison
+  # @since 0.0.1
+  # @attr_reader [String] parent The potentially biased website's parent
+  #                              organization.
   class Client
-    # The potentially biased website's parent organization.
     attr_reader(:parent)
 
     # @param [String] domain The potentially biased website's domain.
