@@ -5,6 +5,8 @@
 (http://badge.fury.io/rb/biased)
 [![Coverage Status](https://coveralls.io/repos/matthin/biased/badge.svg)]
 (https://coveralls.io/r/matthin/biased)
+[![Inch Status](https://inch-ci.org/github/matthin/biased.svg?branch=master)]
+(https://inch-ci.org/github/matthin/biased/branch/master)
 
 # Usage
 To run from the command line, use: `biased example.com`
