@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rspec", "~> 3.3")
   s.add_development_dependency("yard", "~> 0.8.7")
   s.add_runtime_dependency("httparty", "~> 0.13")
-  s.add_runtime_dependency("wikipedia-client", "~> 1.3")
+  s.add_runtime_dependency("wikipedia-client", "~> 1.4")
 end
 
