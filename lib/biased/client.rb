@@ -13,16 +13,25 @@ module Biased
       @parent = gather_from_wikipedia
     end
 
+    # Gathers the parent organization of any website from wikipedia
+    # if possible.
+    # @since 0.0.1
+    # @return [String, nil] The parent organization or nil.
     def gather_from_wikipedia
+      parent = nil
       content = Wikipedia.find(@domain).content
       # Wikipedia has multiple fields for a parent organization,
       # so we need to try each one
       %w(parent owner).each do |field|
         # This Regex should be cleaned up.
-        parent = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
-        # Capture group 2 contains only the parent value
-        return parent[2] if parent
+        match = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
+        if match
+          parent = match[2]
+          break
+        end
       end
+
+      parent
     end
   end
 end
