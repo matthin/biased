@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.executables   = ["biased"]
   s.homepage      = "https://github.com/matthin/biased"
   s.license       = "MIT"
+  s.add_development_dependency("coveralls", "~> 0.8")
   s.add_development_dependency("rake", "~> 10.4")
   s.add_development_dependency("rspec", "~> 3.3")
   s.add_development_dependency("yard", "~> 0.8.7")

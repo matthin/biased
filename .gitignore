@@ -4,5 +4,6 @@
 *.gem
 Gemfile.lock
 doc/
+coverage/
 .yardoc
 
