@@ -2,10 +2,12 @@ require "httparty"
 require "wikipedia"
 
 module Biased
+  # The main class that a end user will use to interact with the application.
   # @author Justin Harrison
   # @since 0.0.1
   # @attr_reader [String] parent The potentially biased website's parent
   #                              organization.
+  #   Biased::Client.new("huffingtonpost.com")
   class Client
     attr_reader(:parent)
 
