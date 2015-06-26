@@ -1,3 +1,5 @@
+require "biased/calculator"
+
 require "httparty"
 require "wikipedia"
 
@@ -7,14 +9,23 @@ module Biased
   # @since 0.0.1
   # @attr_reader [String] parent The potentially biased website's parent
   #                              organization.
-  #   Biased::Client.new("huffingtonpost.com")
+  # attr_reader [Boolean] has_bias Whether or not the article is biased.
+  #   Biased::Client.new(
+  #     "http://www.huffingtonpost.com/"\
+  #     "2015/05/12/verizon-aol-huffpost_n_7269056.html"
+  #   )
   class Client
-    attr_reader(:parent)
+    attr_reader(:parent, :has_bias)
 
-    # @param [String] domain The potentially biased website's domain.
-    def initialize(domain)
-      @domain = domain
+    # @param [String] article_url The potentially biased article's URL.
+    def initialize(article_url)
+      # Add more TLDs than just com, and net.
+      @domain = /.*([^\.]+)(com|net)/.match(article_url)
       @parent = gather_from_wikipedia
+      @has_bias = Calculator.new(
+        HTTParty.get("http://" + article_url).body,
+        {parent: @parent}
+      ).has_bias
     end
 
     # Gathers the parent organization of any website from wikipedia
