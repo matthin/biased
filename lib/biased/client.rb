@@ -28,6 +28,7 @@ module Biased
       ).has_bias
     end
 
+  private
     # Gathers the parent organization of any website from wikipedia
     # if possible.
     # @since 0.0.1
