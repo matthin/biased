@@ -15,8 +15,17 @@ To run from the command line, use: `biased example.com`
 ```ruby
 require "biased"
 
-puts Biased::Client.new("huffingtonpost.com").parent
+puts Biased::Client.new("huffingtonpost.com").has_bias
 ```
-# Developers
+# Contributors
+Requirements:
+
+* Ruby v2.0+
+* Bundler (`gem install bundler`)
+
+To setup all the required gems, just run `bundle install`.
+You may need to also run `rbenv rehash` if you're using
+[rbenv](https://github.com/sstephenson/rbenv).
+
 To run tests, use: `rake spec`
 
