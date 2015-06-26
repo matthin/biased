@@ -2,6 +2,15 @@ require "spec_helper"
 require "biased/client"
 
 describe(Biased::Client) do
+  before(:each) do
+    allow(HTTParty).to(
+      receive_message_chain(:get, :body).and_return(
+        "<h1>AOL CEO On Verizon Deal: HuffPost"\
+        "'Will Always Be A Cornerstone Of AOL'</h1>"
+      )
+    )
+  end
+
   context("creates a parent") do
     it("with one word") do
       allow(Wikipedia).to(
@@ -24,12 +33,6 @@ describe(Biased::Client) do
     it("detects bias") do
       allow(Wikipedia).to(
         receive_message_chain(:find, :content).and_return("owner = [[AOL]]")
-      )
-      allow(HTTParty).to(
-        receive_message_chain(:get, :body).and_return(
-          "<h1>AOL CEO On Verizon Deal: HuffPost"\
-          "'Will Always Be A Cornerstone Of AOL'</h1>"
-        )
       )
       @client = Biased::Client.new(
         "huffingtonpost.com/2015/05/12/verizon-aol-huffpost_n_7269056.html"
