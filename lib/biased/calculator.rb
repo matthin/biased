@@ -12,8 +12,19 @@ module Biased
       @article = article
       title = Oga.parse_html(article).at_css("h1")
       if title
-        @has_bias = (title.text =~ Regexp.new(info[:parent], "i")) != nil
+        if title.text =~ Regexp.new(info[:parent], "i")
+          @has_bias = true
+        end
+
+        info[:staff] ||= []
+        info[:staff].each do |member|
+          if title.text =~ Regexp.new(member, "i")
+            @has_bias = true
+          end
+        end
       end
+
+      @has_bias ||= false
     end
   end
 end

@@ -24,7 +24,7 @@ module Biased
       gather_from_wikipedia
       @has_bias = Calculator.new(
         HTTParty.get("http://" + article_url).body,
-        {parent: @parent}
+        {parent: @parent, staff: @staff}
       ).has_bias
     end
 
