@@ -20,8 +20,8 @@ module Biased
     # @param [String] article_url The potentially biased article's URL.
     def initialize(article_url)
       # Add more TLDs than just com, and net.
-      @domain = /.*([^\.]+)(com|net)/.match(article_url)
-      @parent = gather_from_wikipedia
+      @domain = /([a-z]+).(com|net)/.match(article_url)
+      gather_from_wikipedia
       @has_bias = Calculator.new(
         HTTParty.get("http://" + article_url).body,
         {parent: @parent}
@@ -29,12 +29,10 @@ module Biased
     end
 
   private
-    # Gathers the parent organization of any website from wikipedia
-    # if possible.
+    # Gathers info such as parent organization, staff, and location
+    # from wikipedia.
     # @since 0.0.1
-    # @return [String, nil] The parent organization or nil.
     def gather_from_wikipedia
-      parent = nil
       content = Wikipedia.find(@domain).content
       # Wikipedia has multiple fields for a parent organization,
       # so we need to try each one
@@ -42,12 +40,27 @@ module Biased
         # This Regex should be cleaned up.
         match = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
         if match
-          parent = match[2]
+          @parent = match[2]
           break
         end
       end
 
-      parent
+      parse_staff(content)
+    end
+
+    def parse_staff(content)
+      if match = /(key_people\s+=\s.*\])/.match(content)
+        line = match[1]
+      else
+        return
+      end
+
+      @staff = []
+      index = 0
+
+      if matches = line.scan(/(?:[^(]\[\[)(\w+ \w+)(?:\]\])/)
+        matches.each {|match| @staff << match }
+      end
     end
   end
 end
