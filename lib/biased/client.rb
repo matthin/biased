@@ -37,30 +37,32 @@ module Biased
       # Wikipedia has multiple fields for a parent organization,
       # so we need to try each one
       %w(parent owner).each do |field|
-        # This Regex should be cleaned up.
-        match = /(#{field}\s*=\s\[\[)(.*\w+)/.match(content)
-        if match
-          @parent = match[2]
-          break
+        parent = parse_field(content, field)
+        if parent.length > 0
+          @parent = parent[0]
         end
       end
 
-      parse_staff(content)
+      @staff = parse_field(content, "key_people")
     end
 
-    def parse_staff(content)
-      if match = /(key_people\s+=\s.*\])/.match(content)
+    # Parses a specific wikipedia field and returns the results.
+    # @param [String] content The content of a wikipedia article.
+    # @param [String] field The field where the results will be found.
+    # @return [Array] The results found inside the specified field.
+    def parse_field(content, field)
+      if match = /(#{field}\s+=\s.*\])/.match(content)
         line = match[1]
       else
-        return
+        return []
       end
 
-      @staff = []
-      index = 0
-
-      if matches = line.scan(/(?:[^(]\[\[)(\w+ \w+)(?:\]\])/)
-        matches.each {|match| @staff << match }
+      results = []
+      if matches = line.scan(/(?:\[\[)([\w\s]+)(?:\]\])/)
+        # scan returns all matches as an array of chars
+        matches.each {|match| results << match.join("")}
       end
+      results
     end
   end
 end
